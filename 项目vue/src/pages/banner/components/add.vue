@@ -2,20 +2,13 @@
   <div class="add">
     <el-dialog :title="info.title" :visible.sync="info.show" @click="add()">
       <el-form :model="form">
-        <el-form-item label="上级分类" label-width="80px">
-          <el-select v-model="form.pid">
-            <el-option label="--请选择--" value disabled></el-option>
-            <el-option label="顶级分类" :value="0"></el-option>
-            <!-- 动态数据 -->
-            <el-option v-for="item in list" :key="item.id" :label="item.catename" :value="item.id"></el-option>
-          </el-select>
+      
+
+        <el-form-item label="标题" label-width="80px">
+          <el-input v-model="form.title" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="分类名称" label-width="80px">
-          <el-input v-model="form.catename" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item label="图片" label-width="80px" v-if="form.pid!==0">
+      <el-form-item label="图片" label-width="80px" v-if="form.pid!==0">
           <el-upload
             class="avatar-uploader"
             action="#"
@@ -43,9 +36,9 @@
 </template>
 <script>
 import {
-  requestCateAdd,
-  requestCateDetail,
-  requestCateUpdate
+  requestBannerAdd,
+  requestBannerDetail,
+  requestBannerUpdate
 } from "../../../unit/request";
 import { successAlert, warningAlert } from "../../../unit/alert";
 import { mapGetters, mapActions } from "vuex";
@@ -54,7 +47,7 @@ export default {
   components: {},
   computed: {
     ...mapGetters({
-      list: "cate/list"
+      list: "banner/list"
     })
   },
   data() {
@@ -63,8 +56,7 @@ export default {
       imageUrl:"",
 
       form: {
-        pid: 0,
-       catename:"",
+       title:"",
        img:null,
        status:1
       }
@@ -72,7 +64,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      requestList: "cate/requestList"
+      requestList: "banner/requestList",
+      requestEdit:"banner/requestEdit"
     }),
  
 //   修改了图片
@@ -97,8 +90,7 @@ export default {
     //  重置内容
     empty() {
       this.form = {
-         pid: 0,
-       catename:"",
+        title:"",
        img:null,
        status:1
       };
@@ -108,9 +100,8 @@ export default {
       this.info.show = false;
     },
     add() {
-      //  获取tree的key赋值给form.menus
-      // this.form.menus = JSON.stringify(this.$refs.tree.getCheckedKeys())
-      requestCateAdd(this.form).then(res => {
+     
+      requestBannerAdd(this.form).then(res => {
         if (res.data.code == 200) {
           successAlert(res.data.msg);
           this.empty();
@@ -125,7 +116,7 @@ export default {
 
     //  获取某一条数据
     getDetail(id) {
-      requestCateDetail({ id: id }).then(res => {
+      requestBannerDetail({ id: id }).then(res => {
         this.form = res.data.list;
         this.form.id = id;
         this.imageUrl=this.$imgPre+res.data.list.img
@@ -133,19 +124,21 @@ export default {
     },
     // 修改
     update() {
-      requestCateUpdate(this.form).then(res => {
+      requestBannerUpdate(this.form).then(res => {
         if (res.data.code == 200) {
           successAlert(res.data.msg);
           this.empty();
           this.cancel();
-          this.requestList();
+         this.requestEdit()
         } else {
           warningAlert(res.data.msg);
         }
       });
     }
   },
-  mounted() {}
+  mounted() {
+
+  }
 
 };
 </script>
@@ -160,6 +153,11 @@ export default {
   }
   .add >>> .el-upload:hover {
        border: 1px dashed 409EFF !important;
+  }
+  .add>>>#img {
+    width 148px!important;
+    height 148px;
+    border-radius 5px
   }
   .avatar-uploader-icon {
     font-size: 28px;

@@ -1,12 +1,8 @@
 <template>
 <div>
     <el-table :data="list" style="width: 100%">
-      <el-table-column prop="title" label="轮播图标题" width="180"></el-table-column>
-      <el-table-column prop="img" label="图片" width="180">
-         <template slot-scope="scope">
-          <img :src="$imgPre+scope.row.img" alt />
-        </template>
-      </el-table-column>
+      <el-table-column prop="title" label="活动名称" width="180"></el-table-column>
+    >
           
       <el-table-column label="状态">
         <template slot-scope="scope">
@@ -29,18 +25,18 @@
 </template>
 <script>
 import {mapGetters,mapActions}  from "vuex"
-import { requestBannerDelete}  from "../../../unit/request"
+import { requestSeckillDelete}  from "../../../unit/request"
 import {successAlert,warningAlert} from "../../../unit/alert"
 export default {
     computed:{
       ...mapGetters({
-           list: "banner/list",
+           list: "Seckill/list",
       })
     },
     methods:{
      ...mapActions({
-         "requestList":"banner/requestList",
-          requestOne:"banner/requestOne",
+         "requestList":"Seckill/requestList",
+          requestOne:"Seckill/requestOne",
      }),
     //  aa(){
     //    console.log('aaaa')
@@ -50,7 +46,7 @@ export default {
        this.requestOne({id:id})
      },
      del(id){
-          requestBannerDelete({ id: id }).then((res) => {
+          requestSeckillDelete({id:id}).then((res) => {
         if (res.data.code == 200) {
           successAlert("删除成功");
           this.requestList();
@@ -72,8 +68,5 @@ return {
  },}
 </script>
 <style scoped>
-img{
-  width: 120px;
-      height: 120px;
-}
+
 </style>

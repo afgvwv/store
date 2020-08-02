@@ -359,11 +359,14 @@ export const requestMemberUpdate = (params)=>{
 
 // 轮播图添加
 export const requestBannerAdd = (params)=>{
-    
+     let formData = new FormData()
+     for(let i in params){
+          formData.append(i,params[i])
+     }
      return axios({
             url:baseUrl+"/api/banneradd",
             method:"post",
-            data:qs.stringify(params)
+            data:formData
      })
 }
 
@@ -387,11 +390,14 @@ export const requestBannerDetail = (params)=>{
 
 // 轮播图修改
 export const requestBannerUpdate = (params)=>{
-     
+     let formData = new FormData()
+     for(let i in params){
+          formData.append(i,params[i])
+     }
      return axios({
             url:baseUrl+"/api/banneredit",
             method:"post",
-            data:qs.stringify(params)
+            data:formData
      })
 }
 
@@ -404,3 +410,50 @@ export const requestBannerDelete = (params)=>{
      })
 }
 
+
+// 秒杀活动添加
+export const requestSeckillAdd = (params)=>{
+    
+     return axios({
+            url:baseUrl+"/api/seckadd",
+            method:"post",
+            data:qs.stringify(params)
+     })
+}
+
+// 秒杀活动列表
+export const requestSeckillList = (params)=>{
+     return axios({
+            url:baseUrl+"/api/secklist",
+            method:"get",
+            params
+     })
+}
+
+// 秒杀活动详情
+export const requestSeckillDetail = (params)=>{
+     return axios({
+            url:baseUrl+"/api/seckinfo",
+            method:"get",
+            params
+     })
+}
+
+// 秒杀活动修改
+export const requestSeckillUpdate = (params)=>{
+    
+     return axios({
+            url:baseUrl+"/api/seckedit",
+            method:"post",
+            data:qs.stringify(params)
+     })
+}
+
+// 秒杀活动删除
+export const requestSeckillDelete = (params)=>{
+     return axios({
+            url:baseUrl+"/api/seckdelete",
+            method:"post",
+            data:qs.stringify(params)
+     })
+}

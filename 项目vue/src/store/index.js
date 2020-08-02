@@ -11,6 +11,9 @@ import cate from "./moudle/cate"
 import spec from "./moudle/spec"
 import goods from "./moudle/goods"
 import member from "./moudle/member"
+import banner from "./moudle/banner"
+import Seckill from "./moudle/seckill"
+
 
 export default new Vuex.Store({
     state,
@@ -24,6 +27,8 @@ export default new Vuex.Store({
         cate,
         spec,
         goods,
-        member
+        member,
+        banner,
+        Seckill
     }
 })
