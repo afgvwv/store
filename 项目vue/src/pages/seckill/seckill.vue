@@ -3,10 +3,10 @@
     <el-button type="primary" @click="add()">添加</el-button>
     
     <!-- 添加弹框 -->
-    <v-add :info="info" res="add"></v-add>
+    <v-add :info="info" ref="add"></v-add>
 
     <!-- 列表 -->
-    <v-list></v-list>
+    <v-list @edit="edit"></v-list>
 </div>
 </template>
 <script>
@@ -22,17 +22,21 @@ return {
    info:{
       show:false,
       title:"",
-      isAdd:true
+      isAdd:true,
+       title: "活动添加",
    }
 }
    },
 methods:{
    add(){
-      this.info.show = true
+      this.info.show = true;
+      this.info.isAdd = true;
+      this.info.title = "活动添加";
     },
     edit(id){
-      this.info.show = !this.info.show
+      this.info.show = true
       this.info.isAdd = false;
+       this.info.title = "活动编辑";
        this.$refs.add.getDetail(id);
     }
 },

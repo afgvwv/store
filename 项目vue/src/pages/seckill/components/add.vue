@@ -113,6 +113,9 @@ export default {
       requestSpecList: "spec/requestList",
       //获取商品列表
       requestGoodsList: "goods/requestList",
+
+      requestEdit:"Seckill/requestEdit"
+
     }),
     changeSecondCateId(){
        requestGoodsList({
@@ -145,7 +148,7 @@ export default {
       this.info.show = false;
     },
     add() {
-    if(valid){
+  
        this.form.begintime = this.value1[0].getTime();
           this.form.endtime = this.value1[1].getTime();
            requestSeckillAdd(this.form).then(res=>{
@@ -154,18 +157,18 @@ export default {
           this.empty();
           this.cancel();
           // 再次请求list数据
-          this.requestList();
+          this.requestSeckillList();
         } else {
           warningAlert(res.data.msg);
         }
       });
-    }
      
     },
    
 
     //  获取某一条数据
-    getDetail(id) {
+    getDetail(id){
+      console.log(1)
       requestSeckillDetail({ id: id }).then(res => {
         this.form = res.data.list;
        this. changeFirstCateId(true);
@@ -180,17 +183,17 @@ export default {
     // 修改
     update() {
      requestSeckillUpdate(this.form).then(res => {
-       if(valid){
-         if (res.data.code == 200) {
+    
+         if(res.data.code == 200) {
           successAlert(res.data.msg);
           this.empty();
           this.cancel();
           this.requestEdit();
-        } 
-       }
-        else {
+        }  else {
           warningAlert(res.data.msg);
         }
+      
+       
       });
     }
   },

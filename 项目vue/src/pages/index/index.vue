@@ -14,7 +14,7 @@
           <span slot="title">首页</span>
         </el-menu-item>
         <!-- 有目录的循环 -->
-        <el-submenu v-show="hasChildern"  :index="item.id+''" v-for="(item,index) in user.menus" >
+        <el-submenu v-show="hasChildern"  :index="item.id+''" v-for="item in user.menus" :key="item.title">
           <template slot="title">
             <i :class="item.icon"></i>
             <span>{{item.title}}</span>
